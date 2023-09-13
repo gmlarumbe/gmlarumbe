@@ -25,5 +25,13 @@ GitHub Actions status:
      [![Build Status](https://github.com/gmlarumbe/vhdl-ts-mode/workflows/package-el-basic/badge.svg)](https://github.com/gmlarumbe/vhdl-ts-mode/actions/workflows/build_package_melpa_basic.yml)
      [![Build Status](https://github.com/gmlarumbe/vhdl-ts-mode/workflows/ERT-MELPA-Stable/badge.svg)](https://github.com/gmlarumbe/vhdl-ts-mode/actions/workflows/build_package_melpa_stable.yml)
 
+  * [fpga](https://github.com/gmlarumbe/fpga)
+
+    [![Build Status](https://github.com/gmlarumbe/fpga/workflows/elisp-check/badge.svg)](https://github.com/gmlarumbe/fpga/actions/workflows/elisp-check.yml)
+
+  * [wavedrom-mode](https://github.com/gmlarumbe/wavedrom-mode)
+
+    [![Build Status](https://github.com/gmlarumbe/wavedrom-mode/workflows/elisp-check/badge.svg)](https://github.com/gmlarumbe/wavedrom-mode/actions/workflows/elisp-check.yml)
+
 <br/><br/>
 Please consider [sponsoring](https://github.com/sponsors/gmlarumbe) my work.  *Thank you!*
