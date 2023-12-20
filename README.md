@@ -27,11 +27,11 @@ GitHub Actions status:
 
   * [fpga](https://github.com/gmlarumbe/fpga)
 
-     [![Build Status](https://github.com/gmlarumbe/fpga/workflows/elisp-check/badge.svg)](https://github.com/gmlarumbe/fpga/actions/workflows/elisp-check.yml)
+     [![Build Status](https://github.com/gmlarumbe/fpga/actions/workflows/elisp_check.yml/badge.svg)](https://github.com/gmlarumbe/fpga/actions/workflows/elisp_check.yml)
 
   * [wavedrom-mode](https://github.com/gmlarumbe/wavedrom-mode)
 
-     [![Build Status](https://github.com/gmlarumbe/wavedrom-mode/workflows/elisp-check/badge.svg)](https://github.com/gmlarumbe/wavedrom-mode/actions/workflows/elisp-check.yml)
+     [![Build Status](https://github.com/gmlarumbe/wavedrom-mode/actions/workflows/elisp_check.yml/badge.svg)](https://github.com/gmlarumbe/wavedrom-mode/actions/workflows/elisp_check.yml)
 
 <br/><br/>
 Please consider [sponsoring](https://github.com/sponsors/gmlarumbe) my work.  *Thank you!*
