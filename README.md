@@ -25,6 +25,10 @@ GitHub Actions status:
      [![Build Status](https://github.com/gmlarumbe/vhdl-ts-mode/actions/workflows/build_package_melpa_basic.yml/badge.svg)](https://github.com/gmlarumbe/vhdl-ts-mode/actions/workflows/build_package_melpa_basic.yml)
      [![Build Status](https://github.com/gmlarumbe/vhdl-ts-mode/actions/workflows/build_package_melpa_stable.yml/badge.svg)](https://github.com/gmlarumbe/vhdl-ts-mode/actions/workflows/build_package_melpa_stable.yml)
 
+  * [tree-sitter-systemverilog](https://github.com/gmlarumbe/tree-sitter-systemverilog)
+
+     [![Build Status](https://github.com/gmlarumbe/tree-sitter-systemverilog/actions/workflows/ci.yml/badge.svg)](https://github.com/gmlarumbe/tree-sitter-systemverilog/actions/workflows/ci.yml)
+
   * [fpga](https://github.com/gmlarumbe/fpga)
 
      [![Build Status](https://github.com/gmlarumbe/fpga/actions/workflows/elisp_check.yml/badge.svg)](https://github.com/gmlarumbe/fpga/actions/workflows/elisp_check.yml)
