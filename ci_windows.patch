@@ -1,0 +1,38 @@
+diff --git a/.github/workflows/build_straight.yml b/.github/workflows/build_straight.yml
+index 06606c7..c81025c 100644
+--- a/.github/workflows/build_straight.yml
++++ b/.github/workflows/build_straight.yml
+@@ -9,20 +9,24 @@ on:
+ 
+ jobs:
+   build:
+-    runs-on: ubuntu-latest
+     strategy:
+       fail-fast: false
+       matrix:
++        os:
++          - ubuntu-latest
++          - windows-latest
+         emacs_version:
+           - 29.1
++          - 29.2
+           - release-snapshot
+           # INFO: At some point, in Emacs 30 the 'pp' function, which all
+           # tests rely on to generate the ref file, changed how objects are
+           # displayed, making many tests fail.
+           # Therefore, moved the snapshot to its own workflow out of regular CI
++    runs-on: ${{ matrix.os }}
+     steps:
+       - name: Set up Emacs
+-        uses: purcell/setup-emacs@master
++        uses: jcs090218/setup-emacs@master
+         with:
+           version: ${{ matrix.emacs_version }}
+ 
+diff --git a/test-hdl b/test-hdl
+index 2416dbf..8e635da 160000
+--- a/test-hdl
++++ b/test-hdl
+@@ -1 +1 @@
+-Subproject commit 2416dbfca1bdda0c33afc8b9907ff08732beb56e
++Subproject commit 8e635da993b3cda2609c4700e39e076dc8c4c24b
