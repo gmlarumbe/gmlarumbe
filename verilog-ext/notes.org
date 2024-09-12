@@ -362,11 +362,14 @@ DANGER: Still very inefficient, removed funcall in
 
 
 * Dev
-** TODO Dev: Check ox-hugo to generate blog with short tutorial
-** TODO Dev: Rebase/rewrite tree-sitter-verilog
-** TODO Pending before release 0.5.0
-*** TODO Dev: vhdl-ext: enable hideshow by default, similar to verilog-ext
-*** TODO Dev: verilog-ext
+** DONE Dev: Rebase/rewrite tree-sitter-verilog
+CLOSED: [2024-09-12 Thu 18:32]
+** DONE Pending before release 0.5.0
+CLOSED: [2024-09-12 Thu 18:32]
+*** DONE Dev: vhdl-ext: enable hideshow by default, similar to verilog-ext
+CLOSED: [2024-09-12 Thu 18:32]
+*** DONE Dev: verilog-ext
+CLOSED: [2024-09-12 Thu 18:32]
 - [-] Check functionality: last 1 checked was navigation (still the fix for the define-key-map), continue on template
   - [X] navigation: all except `verilog-ext-forward-word', `verilog-ext-backward-word' and `verilog-ext-jump-to-parent-module'
   - [ ] template: syntax-ppss error with instance from file in `verilog-ts-mode', with `verilog-mode' works fine
@@ -381,17 +384,9 @@ Respect to the keybindings, they cannot be set conditionally on major mode in th
 is executed only once when the package is loaded. Therefore, the verilog-ext will wrap functions and execute
 the proper one depending on if verilog-mode or verilog-ts-mode
 
-*** TODO Dev: Update Git tags in verilog-ts-mode and vhdl-ts-mode to and update them in Package-Requires header of verilog-ext and vhdl-ext
+*** DONE Dev: Update Git tags in verilog-ts-mode and vhdl-ts-mode to and update them in Package-Requires header of verilog-ext and vhdl-ext
+CLOSED: [2024-09-12 Thu 18:31]
 - Otherwise the flows associated with MELPA-Stable will fail!
-
-*** TODO Dev: Do equivalent to AUTOs to be able to do instantiations
-- [ ] Worked around by switching temporarily to `verilog-mode` before running `verilog-auto`, then switching back to `verilog-ts-mode`
-- Check code on TerosHDL and their API to see how they get info about the ports
-- [ ] template: syntax-ppss error with instance from file in `verilog-ts-mode', with `verilog-mode' works fine
-  - This is because `verilog-auto' changes mode to `verilog-mode' and the `syntax-ppss' changes, and is somehow wrong...
-  - [ ] It would be needed to use a replacement of Verilog_AUTO approach with tree-sitter:
-    - Use tree-sitter parsing to get the ports, their type, and their names and save them in some variable
-    - Use this variable to generate the instantiation
 
 *** DONE Dev: vhdl-ts-mode: 'symbols in regexp-opts
 CLOSED: [2024-01-10 Wed 00:28]
@@ -422,10 +417,6 @@ the proper one depending on if vhdl-mode or vhdl-ts-mode
                       (t
                        (error "Unexpected component_instantiation_statement subnode!")))
 #+end_src
-
-** TODO Use a :vhier-files that overrides :files for cases where there are TB files decoupled from the RTL!?
-- Or something like that
-- [ ] Depends on whether vhier can handle complex class-based SV files or it reports syntax errors due to lack of support
 
 ** DONE Pending before release 0.4.0
 CLOSED: [2023-12-20 Wed 14:13]
@@ -618,6 +609,7 @@ for verbosity purposes."
 
 * CI
 ** Comparison of melpazoid and elisp-check in all the repos
+
 - Melpazoid handles properly that there is only one Package-Requires in the main file
   - elisp-checks does a per-file static linting/loading (so not valid for verilog-ext/vhdl-ext that are multifile)
 - Melpazoid runs on old Emacs versions (28.1)
@@ -656,3 +648,39 @@ for verbosity purposes."
 SUMMARY:
 - melpazoid: Run scheduled to catch some linting warnings until it fails because it runs on Emacs 28.1
 - elisp-check: use for verilog-ts-mode, vhdl-ts-mode, fpga and wavedrom-mode (single files)
+
+** About CI environment with forks/branches and GitHub Actions env variables
+- https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables
+- The issue is that the repo is downloaded twice:
+  - One via actions/checkout
+  - Another one via straight/use-package in straight/repos
+- The straight one will always download the same branch, not the one for the current branch/fork/pull request
+  - That's a big problem for contributions
+  - Parameterizing that in the (use-package :straight) body seems quite complicated
+    - For a PR from someone else, what would be the remote name? And the branch?
+- [X] Solution: remote is handled properly by first option, actions/checkout
+  - New Issue: straight needs to download a repo to properly build it and generate autoloads
+  - New solution: Do not use straight for the current package
+    - Wrote `test-hdl-with-github-action-maybe', which takes two parameters
+      - :local - For code that could be run for tests locally (uses straight)
+      - :github - For code that runs on GitHub (doesn't use straight, generate autoload manually with :commands)
+- Other things:
+  - Setting the env var GITHUB_ACTION to test locally how would it be in the remote (with current repo)
+  - If using TESTS_CLEAN_ENV:
+    - If GITHUB_ACTION is unset, it will use straight (as it is intended to)
+      - But will use a fresh downloaded version in /tmp/, not the one with changes in emacs-user-directory
+    - If GITHUB_ACTION is set, it will do as expected, and will download dependencies
+- It is needed to use straight however at least to download dependencies!
+  - [ ] Solution: Add a line with :straight nil afterwards to shadow the downloaded package with the actions/checkout one!
+
+- Other stuff:
+  - At some point tried to parameterize the use-package body to avoid using the :straight nil thing, but didn't work:
+#+begin_src elisp
+  ;; Tried the following let-bindings without success:
+   let ((use-package-defaults (remove '(:straight '(t) straight-use-package-by-default) use-package-defaults))
+        (straight-enable-use-package-integration nil)
+        (straight-use-package-by-default nil))
+    (straight-use-package-mode -1)
+    (setq straight-use-package-mode nil)
+    (setq straight-use-package-by-default nil)
+#+end_src

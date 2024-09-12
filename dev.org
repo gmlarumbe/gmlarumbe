@@ -1,0 +1,72 @@
+* Generic
+** TODO [#A] Generic: Check ox-hugo to generate blog with short tutorial
+
+
+* verilog-ext
+** TODO Dev: Do equivalent to AUTOs to be able to do instantiations
+- [ ] Worked around by switching temporarily to `verilog-mode` before running `verilog-auto`, then switching back to `verilog-ts-mode`
+- Check code on TerosHDL and their API to see how they get info about the ports
+- [ ] template: syntax-ppss error with instance from file in `verilog-ts-mode', with `verilog-mode' works fine
+  - This is because `verilog-auto' changes mode to `verilog-mode' and the `syntax-ppss' changes, and is somehow wrong...
+  - [ ] It would be needed to use a replacement of Verilog_AUTO approach with tree-sitter:
+    - Use tree-sitter parsing to get the ports, their type, and their names and save them in some variable
+    - Use this variable to generate the instantiation
+
+** TODO verilog-ext: Use a :vhier-files that overrides :files for cases where there are TB files decoupled from the RTL!?
+- Or something like that
+- [ ] Depends on whether vhier can handle complex class-based SV files or it reports syntax errors due to lack of support
+
+
+
+* verilog-ts-mode
+** TODO [#A] verilog-ts-mode: verilog-ts-pretty-declarations and verilog-ts-pretty-expr
+- Aligns all the declarations: current node, siblings and children
+  - That's an issue if in a module declaration, trying to align signals, will also aligh the rest of the code
+- Should only align the siblings in a particular range?
+
+** TODO [#B] verilog-ts-mode: Group Imenu entries
+- Imenu entries could be grouped with a tree structure, but with instances inside a module (e.g.)
+- Also check the name of external defined methods
+- And also the labeling?
+
+** TODO [#B] verilog-ts-forward-sexp and backward-sexp
+- [ ] Fail if point is not over a symbol
+- [ ] Fail or do something weird if point is at a comment
+- [ ] Also happens for vhdl equivalent
+
+** TODO verilog-ts-mode: Refactor indent anchors/matchers and rules
+** TODO verilog-ts-mode: Refactor/clean font-lock rules
+** TODO verilog-ts-mode: template instance from file implementation
+- To overcome the syntax-ppss error after verilog-auto
+- Probably needs to use something different as verilog-auto
+- Something that reads the ports, inputs/outputs/interfaces of a module and instantiates them
+
+** TODO verilog-ts-mode: Add new file with API helper functions from tree-sitter new grammar
+- Check how TerosHDL does this, to get more high level functionality
+
+
+* vhdl-ts-mode
+** TODO [#A] vhdl-ts-mode: Beautify: rewrite alignment code and make sure it's faster than original one
+- Indent code takes more or less the same. The big part comes with alignment.
+  - Check if it is possible a much faster tree-sitter implementation
+
+** TODO vhdl-ts-mode: Group Imenu entries
+- Imenu entries could be grouped with a tree structure, but with instances inside a module (e.g.)
+- Also check the name of external defined methods
+- And also the labeling?
+** TODO vhdl-ts-mode: Refactor indent anchors/matchers and rules
+** TODO vhdl-ts-mode: Refactor/clean font-lock rules
+** TODO vhdl-ts-mode: Add new file with API helper functions from tree-sitter new grammar
+- Check how TerosHDL does this, to get more high level functionality
+** TODO vhdl-ts-forward-sexp and backward-sexp
+- [ ] Fail if point is not over a symbol
+- [ ] Fail or do something weird if point is at a comment
+- [ ] Also happens for verilog equivalent
+- [ ] Take the "then" and "if" or "else" into account for hideshow!!
+  - /home/gonz/.emacs.d/straight/repos/vhdl-ext/test/files/common/sexp.vhd:60
+
+
+* vhdl-ext
+** vhdl-ext:
+
+

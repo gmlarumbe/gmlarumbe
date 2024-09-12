@@ -1,7 +1,12 @@
 * Tree-sitter dev
 ** Pending
-*** TODO Update README and comment headers and wiki after integration of vhdl-ts-mode
-*** TODO beautify
+
+
+** Implemented
+*** DONE Update README and comment headers and wiki after integration of vhdl-ts-mode
+CLOSED: [2024-09-12 Thu 18:54]
+*** DONE [#C] beautify
+CLOSED: [2024-09-12 Thu 18:54]
 - Pending:
   #+begin_src elisp
 ;;; Beautify
@@ -34,18 +39,6 @@
     (delete-trailing-whitespace (point-min) (point-max))))
   #+end_src
 - [ ] Add new tests with new options
-
-*** TODO vhdl-ts-forward-sexp and backward-sexp
-- [ ] Fail if point is not over a symbol
-- [ ] Fail or do something weird if point is at a comment
-- [ ] Also happens for verilog equivalent
-- [ ] Take the "then" and "if" or "else" into account for hideshow!!
-  - /home/gonz/.emacs.d/straight/repos/vhdl-ext/test/files/common/sexp.vhd:60
-
-- [ ]
-
-
-** Implemented
 *** DONE Remove verilog-company-keywords and company dependency
 CLOSED: [2023-09-11 Mon 20:02]
 - Move to capf
@@ -136,38 +129,3 @@ CLOSED: [2023-09-11 Mon 19:21]
 
 
 
-* About CI environment with forks/branches and GitHub Actions env variables
-- https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables
-- The issue is that the repo is downloaded twice:
-  - One via actions/checkout
-  - Another one via straight/use-package in straight/repos
-- The straight one will always download the same branch, not the one for the current branch/fork/pull request
-  - That's a big problem for contributions
-  - Parameterizing that in the (use-package :straight) body seems quite complicated
-    - For a PR from someone else, what would be the remote name? And the branch?
-- [X] Solution: remote is handled properly by first option, actions/checkout
-  - New Issue: straight needs to download a repo to properly build it and generate autoloads
-  - New solution: Do not use straight for the current package
-    - Wrote `test-hdl-with-github-action-maybe', which takes two parameters
-      - :local - For code that could be run for tests locally (uses straight)
-      - :github - For code that runs on GitHub (doesn't use straight, generate autoload manually with :commands)
-- Other things:
-  - Setting the env var GITHUB_ACTION to test locally how would it be in the remote (with current repo)
-  - If using TESTS_CLEAN_ENV:
-    - If GITHUB_ACTION is unset, it will use straight (as it is intended to)
-      - But will use a fresh downloaded version in /tmp/, not the one with changes in emacs-user-directory
-    - If GITHUB_ACTION is set, it will do as expected, and will download dependencies
-- It is needed to use straight however at least to download dependencies!
-  - [ ] Solution: Add a line with :straight nil afterwards to shadow the downloaded package with the actions/checkout one!
-
-- Other stuff:
-  - At some point tried to parameterize the use-package body to avoid using the :straight nil thing, but didn't work:
-#+begin_src elisp
-  ;; Tried the following let-bindings without success:
-   let ((use-package-defaults (remove '(:straight '(t) straight-use-package-by-default) use-package-defaults))
-        (straight-enable-use-package-integration nil)
-        (straight-use-package-by-default nil))
-    (straight-use-package-mode -1)
-    (setq straight-use-package-mode nil)
-    (setq straight-use-package-by-default nil)
-#+end_src
