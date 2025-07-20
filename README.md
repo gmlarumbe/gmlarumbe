@@ -36,6 +36,7 @@ GitHub Actions status:
   * [tree-sitter-systemverilog](https://github.com/gmlarumbe/tree-sitter-systemverilog)
 
      [![Build Status](https://github.com/gmlarumbe/tree-sitter-systemverilog/actions/workflows/ci.yml/badge.svg)](https://github.com/gmlarumbe/tree-sitter-systemverilog/actions/workflows/ci.yml)
+     [![Build Status](https://github.com/gmlarumbe/tree-sitter-systemverilog/actions/workflows/ci_bind.yml/badge.svg)](https://github.com/gmlarumbe/tree-sitter-systemverilog/actions/workflows/ci_bind.yml)
 
   * [fpga](https://github.com/gmlarumbe/fpga)
 
